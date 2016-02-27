@@ -5,8 +5,15 @@ $app=new \Slim\Slim();
 $app->get("/hola/:nombre",function($nombre){
     echo "Hola ".$nombre;
 });
+function pruebaMiddle(){
+  echo "Soy un middleware";
+}
 
-$app->get("/pruebas(/:uno(/:dos))",function($uno=NULL,$dos=NULL){
+function pruebaTwo(){
+  echo "Soy un middleware 2";
+}
+
+$app->get("/pruebas(/:uno(/:dos))",'pruebaMiddle','pruebaTwo',function($uno=NULL,$dos=NULL){
     echo $uno."<br/>";
     echo $dos."<br/>";
 })->conditions(array(
