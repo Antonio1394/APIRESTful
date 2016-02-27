@@ -21,5 +21,16 @@ $app->get("/pruebas(/:uno(/:dos))",'pruebaMiddle','pruebaTwo',function($uno=NULL
   "dos"=>"[0-9]*"
 ));
 
+$app->group("/api",function() use($app){
+  $app->group("/ejemplo",function() use($app){
+    $app->get("/hola/:nombre",function($nombre){
+        echo "Hola ".$nombre;
+    });
+    $app->get("/dime-tu-apellido/:apellido",function($apellido){
+        echo "Hola tu apellido es".$apellido;
+    });
+  });
+});
+
 
 $app->run();
