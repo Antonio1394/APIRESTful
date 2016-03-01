@@ -25,12 +25,15 @@ $app->group("/api",function() use($app,$uri){
   $app->group("/ejemplo",function() use($app,$uri){
     $app->get("/hola/:nombre",function($nombre){
         echo "Hola ".$nombre;
-    });
+    })->name("hola");
     $app->get("/dime-tu-apellido/:apellido",function($apellido){
         echo "Hola tu apellido es".$apellido;
     });
     $app->get("/mandame-a-hola",function() use($app,$uri){
-        $app->redirect($uri."hola/Victor");
+        //$app->redirect($uri."hola/Victor");
+        $app->redirect(urlFor("hola",array(
+          "nombre"=>"Juan RIvera"
+        )));
     });
 
   });
