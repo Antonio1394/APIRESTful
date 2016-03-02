@@ -2,8 +2,9 @@
 require_once 'vendor/autoload.php';
 $app=new \Slim\Slim();
 
-$app->get("/hola/:nombre",function($nombre){
+$app->get("/hola/:nombre",function($nombre) use($app){
     echo "Hola ".$nombre;
+    var_dump($app->request->params("hola"));
 });
 function pruebaMiddle(){
   echo "Soy un middleware";
@@ -31,7 +32,7 @@ $app->group("/api",function() use($app,$uri){
     });
     $app->get("/mandame-a-hola",function() use($app,$uri){
         //$app->redirect($uri."hola/Victor");
-        $app->redirect(urlFor("hola",array(
+        $app->redirect($app->urlFor("hola",array(
           "nombre"=>"Juan RIvera"
         )));
     });
