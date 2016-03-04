@@ -14,11 +14,17 @@ $app->get("/productos",function() use($db,$app){
 
 $app->post("/productos",function() use($db,$app){
     $query="INSERT INTO productos VALUES (NULL,"
-      ."{$app->requeest->post("name")},"
-      ."{$app->requeest->post("description")},"
-      ."{$app->requeest->post("price")},"
-      .")";
+      . "{$app->request->post("name")},"
+      . "{$app->request->post("description")},"
+      . "{$app->request->post("price")},"
+      . ")";
     $insert=$db->query($query);
+    if ($insert) {
+          $result=array("STATUS"=>"true","message"=>"Producto   Creado Exitosamente..");
+    }else{
+          $result=array("STATUS"=>"false","message"=>"Error al crear Producto");
+    }
+    echo json_encode($result);
 
 });
 
