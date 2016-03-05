@@ -30,12 +30,13 @@ $app->post("/productos",function() use($db,$app){
 
 $app->put("/productos/:id",function($id) use($db,$app){
     try {
-    /*  $query="UPDATE productos SET"
-        . "name= '{$app->request->post("name")}',"
-        . "description='{$app->request->post("description")}',"
-        . "price='{$app->request->post("price")}' WHERE id={$id}";
-        */
-        $query="UPDATE productos SET name='{$app->request->post("name")}',description='{$app->request->post("description")}',price='{$app->request->post("price")}' WHERE id={$id}";
+
+        $query="UPDATE productos SET "
+        ."name='{$app->request->post("name")}',"
+        ."description='{$app->request->post("description")}',"
+        ."price='{$app->request->post("price")}' WHERE id={$id}";
+
+        echo $query;
 
       $update=$db->query($query);
 
@@ -50,8 +51,18 @@ $app->put("/productos/:id",function($id) use($db,$app){
       echo json_encode($e);
     }
 
+});
 
+$app->delete("/productos/:id",function($id) use($db,$app){
+    $query="DELETE FROM productos WHERE id={$id}";
+    $delete=$db->query($query);
 
+    if ($delete) {
+          $result=array("STATUS"=>"true","message"=>"Producto Eliminado Exitosamente..");
+    }else{
+          $result=array("STATUS"=>"false","message"=>"Error al Eliminar");
+    }
+    echo json_encode($result);
 });
 
 $app->run();
