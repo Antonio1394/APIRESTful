@@ -29,18 +29,28 @@ $app->post("/productos",function() use($db,$app){
 });
 
 $app->put("/productos/:id",function($id) use($db,$app){
-    $query="UPDATE productos SET"
-      . "name='{$app->request->post("name")}',"
-      . "description='{$app->request->post("description")}',"
-      . "price='{$app->request->post("price")}'"
-      . "WHERE id={$id}";
-    $update=$db->query($query);
-    if ($update) {
-          $result=array("STATUS"=>"true","message"=>"Producto Actualizado Exitosamente..");
-    }else{
-          $result=array("STATUS"=>"false","message"=>"Error al actualizar");
+    try {
+    /*  $query="UPDATE productos SET"
+        . "name= '{$app->request->post("name")}',"
+        . "description='{$app->request->post("description")}',"
+        . "price='{$app->request->post("price")}' WHERE id={$id}";
+        */
+        $query="UPDATE productos SET name='{$app->request->post("name")}',description='{$app->request->post("description")}',price='{$app->request->post("price")}' WHERE id={$id}";
+
+      $update=$db->query($query);
+
+      if ($update) {
+            $result=array("STATUS"=>"true","message"=>"Producto Actualizado Exitosamente..");
+      }else{
+            $result=array("STATUS"=>"false","message"=>"Error al actualizar");
+      }
+      echo json_encode($result);
+
+    } catch (Exception $e) {
+      echo json_encode($e);
     }
-    echo json_encode($result);
+
+
 
 });
 
